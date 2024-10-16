@@ -1,11 +1,11 @@
 package deque;
 public class LinkedListDeque<T> {
-        private class Node {
-            public T item;
+        private static class Node {
+            public Object item;
             public Node prev;
             public Node next;
 
-            public Node(T i, Node p, Node n){
+            public Node(Object i, Node p, Node n){
                 item = i;
                 prev = p;
                 next = n;
@@ -25,7 +25,7 @@ public class LinkedListDeque<T> {
         }
 
         /**Creates a deep copy of another deque*/
-        public LinkedListDeque(LinkedListDeque<T> other){
+        public LinkedListDeque(LinkedListDeque other){
             sentinel = new Node(null,null,null);
             size = 0;
             sentinel.prev = sentinel;
@@ -34,7 +34,8 @@ public class LinkedListDeque<T> {
             //copy from another deque
             Node current = other.sentinel.next;
             while (current != other.sentinel){
-                addLast(current.item);
+                T item = (T) current.item;
+                addLast(item);
                 current = current.next;
             }
 
@@ -76,7 +77,7 @@ public class LinkedListDeque<T> {
                 return null;
             }
             Node first = sentinel.next;
-            T item = first.item;
+            T item = (T)first.item;
             sentinel.next = first.next;
             first.next.prev = sentinel;
             size--;
@@ -88,7 +89,7 @@ public class LinkedListDeque<T> {
                 return null;
             }
             Node last = sentinel.prev;
-            T item = last.item;
+            T item = (T)last.item;
             sentinel.prev = last.prev;
             last.prev.next = sentinel;
             size--;
@@ -103,7 +104,7 @@ public class LinkedListDeque<T> {
             for (int i = 0; i < index; i++){
                 current = current.next;
             }
-            return current.item;
+            return (T)current.item;
          }
 
          public T getRecursive(int index) {
@@ -115,12 +116,31 @@ public class LinkedListDeque<T> {
 
          private T getRecursiveHelper(Node node, int index){
             if (index == 0){
-                return node.item;
+                return (T)node.item;
             }else{
                 return getRecursiveHelper(node.next, index -1);
             }
          }
 
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof LinkedListDeque)) return false;
+            LinkedListDeque<?> other = (LinkedListDeque<?>) o;
+            if (this.size != other.size) return false;
+            Node thisNode = this.sentinel.next;
+            Node otherNode = other.sentinel.next;
+            while (thisNode != sentinel) {
+                if (!thisNode.item.equals(otherNode.item)) {
+                    return false;
+                }
+                thisNode = thisNode.next;
+                otherNode = otherNode.next;
+            }
+            return true;
+        }
 
 
-    }
+
+
+}

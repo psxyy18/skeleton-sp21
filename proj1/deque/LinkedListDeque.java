@@ -1,3 +1,4 @@
+package deque;
 public class LinkedListDeque<T> {
         private class Node {
             public T item;

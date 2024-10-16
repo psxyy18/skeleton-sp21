@@ -24,6 +24,22 @@ public class LinkedListDeque<T> {
 
         }
 
+        /**Creates a deep copy of another deque*/
+        public LinkedListDeque(LinkedListDeque<T> other){
+            sentinel = new Node(null,null,null);
+            size = 0;
+            sentinel.prev = sentinel;
+            sentinel.next = sentinel;
+
+            //copy from another deque
+            Node current = other.sentinel.next;
+            while (current != other.sentinel){
+                addLast(current.item);
+                current = current.next;
+            }
+
+        }
+
         public void addFirst(T item) {
             Node newNode = new Node(item,sentinel,sentinel.next);
             sentinel.next.prev = newNode;

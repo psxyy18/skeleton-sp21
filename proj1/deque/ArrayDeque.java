@@ -70,7 +70,7 @@ public class ArrayDeque<T> {
         System.out.println();
     }
 
-    public boolean isempty(){
+    public boolean isEmpty(){
         return size==0;
     }
     public void addFirst(T item){
@@ -94,7 +94,7 @@ public class ArrayDeque<T> {
 
     /**Removes and returns the item at the front of the deque, if no such items exist then return null;*/
     public T removeFirst(){
-        if (isempty()){
+        if (isEmpty()){
             return null;
         }
         nextFirst = plusone(nextFirst);
@@ -107,7 +107,7 @@ public class ArrayDeque<T> {
 
 
     public T removeLast(){
-        if (isempty()){
+        if (isEmpty()){
             return null;
         }
         nextLast = minusOne(nextLast);
@@ -118,7 +118,7 @@ public class ArrayDeque<T> {
         return item;
     }
     public T get(int index){
-        if (index<0 || index>size || isempty()){
+        if (index<0 || index>size || isEmpty()){
             return null;
         }
         int actualIndex = (plusone(nextFirst) + index)%items.length;
